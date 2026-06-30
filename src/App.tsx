@@ -1,10 +1,10 @@
-import AuthLayout from "./components/AuthLayout";
 
+import 'rentbook-ui-lib/microfrontend.min.css'
+import AuthLayoutGlass from './components/AuthLayoutGlass';
 const App = () => {
-
   return (
     <>
-      <AuthLayout />
+      <AuthLayoutGlass />
     </>
   );
 };
