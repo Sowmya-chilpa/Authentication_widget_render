@@ -1,10 +1,12 @@
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../services/authService";
 import { RegisterFormData, RegisterPayload } from "../types/auth";
-import { useMutation } from "@tanstack/react-query";
-import { VALIDATION_MESSAGES, PLACEHOLDERS, REGISTER_TEXT } from "../constants";
+import {VALIDATION_MESSAGES,PLACEHOLDERS,REGISTER_TEXT,} from "../constants";
+import { Button, Rb_Input, Rb_Label, Rb_Text } from "rentbook-ui-lib";
+
 
 interface RegisterProps {
     isLogin: boolean;
@@ -12,7 +14,6 @@ interface RegisterProps {
 }
 
 const Register = ({ isLogin, setIsLogin }: RegisterProps) => {
-
     const {
         register,
         handleSubmit,
@@ -26,6 +27,7 @@ const Register = ({ isLogin, setIsLogin }: RegisterProps) => {
             reset();
         }
     }, [isLogin, reset]);
+
     const registerMutation = useMutation({
         mutationFn: registerUser,
 
@@ -38,6 +40,7 @@ const Register = ({ isLogin, setIsLogin }: RegisterProps) => {
             toast.error(error.message || REGISTER_TEXT.GENERIC_ERROR);
         },
     });
+
     const onSubmit = (data: RegisterFormData) => {
         const payload: RegisterPayload = {
             firstName: data.firstName,
@@ -50,59 +53,67 @@ const Register = ({ isLogin, setIsLogin }: RegisterProps) => {
     };
 
     return (
-        <div className="p-10 lg:p-12 flex flex-col justify-center bg-">
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold text-slate-800">
+        <div className="px-8 py-2 flex flex-col justify-center">
+            <div className="mb-3">
+                <Rb_Text variant="h2">
                     {REGISTER_TEXT.TITLE}
-                </h1>
+                </Rb_Text>
 
-                <p className="text-gray-500 mt-2">
-                    {REGISTER_TEXT.SUBTITLE}
-                </p>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <input
+                        <Rb_Label htmlFor="firstName" required className="text-sm">
+                            First Name
+                        </Rb_Label>
+                        <Rb_Input
+                            id="firstName"
                             type="text"
                             placeholder={PLACEHOLDERS.FIRST_NAME}
+                            error={!!errors.firstName}
                             {...register("firstName", {
                                 required: VALIDATION_MESSAGES.FIRST_NAME_REQUIRED,
                             })}
-                            className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="border rounded-lg !mt-1 !mb-1"
                         />
-
                         {errors.firstName && (
-                            <p className="text-red-500 text-sm mt-1">
+                            <Rb_Text variant="p" className="text-red-500 text-sm">
                                 {errors.firstName.message}
-                            </p>
+                            </Rb_Text>
                         )}
                     </div>
-
                     <div>
-                        <input
+                        <Rb_Label htmlFor="lastName" required className="text-sm">
+                            Last Name
+                        </Rb_Label>
+                        <Rb_Input
+                            id="lastName"
                             type="text"
                             placeholder={PLACEHOLDERS.LAST_NAME}
+                            error={!!errors.lastName}
                             {...register("lastName", {
                                 required: VALIDATION_MESSAGES.LAST_NAME_REQUIRED,
                             })}
-                            className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="border rounded-lg !mt-1 !mb-1"
                         />
 
                         {errors.lastName && (
-                            <p className="text-red-500 text-sm mt-1">
+                            <Rb_Text variant="p" className="text-red-500 text-sm">
                                 {errors.lastName.message}
-                            </p>
+                            </Rb_Text>
                         )}
                     </div>
                 </div>
-
                 <div>
-                    <input
+                    <Rb_Label htmlFor="email" required className="text-sm">
+                        Email
+                    </Rb_Label>
+                    <Rb_Input
+                        id="email"
                         type="email"
                         placeholder={PLACEHOLDERS.EMAIL}
+                        error={!!errors.email}
                         {...register("email", {
                             required: VALIDATION_MESSAGES.EMAIL_REQUIRED,
                             pattern: {
@@ -110,20 +121,25 @@ const Register = ({ isLogin, setIsLogin }: RegisterProps) => {
                                 message: VALIDATION_MESSAGES.EMAIL_INVALID,
                             },
                         })}
-                        className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="border rounded-lg !mt-1 !mb-1"
                     />
 
                     {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">
+                        <Rb_Text variant="p" className="text-red-500 text-sm">
                             {errors.email.message}
-                        </p>
+                        </Rb_Text>
                     )}
                 </div>
-
                 <div>
-                    <input
+                    <Rb_Label htmlFor="password" required className="text-sm">
+                        Password
+                    </Rb_Label>
+
+                    <Rb_Input
+                        id="password"
                         type="password"
                         placeholder={PLACEHOLDERS.PASSWORD}
+                        error={!!errors.password}
                         {...register("password", {
                             required: VALIDATION_MESSAGES.PASSWORD_REQUIRED,
                             minLength: {
@@ -131,57 +147,64 @@ const Register = ({ isLogin, setIsLogin }: RegisterProps) => {
                                 message: VALIDATION_MESSAGES.PASSWORD_MIN_LENGTH,
                             },
                         })}
-                        className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="border  rounded-lg !mt-1 !mb-1"
                     />
 
                     {errors.password && (
-                        <p className="text-red-500 text-sm mt-1">
+                        <Rb_Text variant="p" className="text-red-500 text-sm">
                             {errors.password.message}
-                        </p>
+                        </Rb_Text>
                     )}
                 </div>
 
                 <div>
-                    <input
+                    <Rb_Label htmlFor="confirmPassword" required className="text-sm">
+                        Confirm Password
+                    </Rb_Label>
+
+                    <Rb_Input
+                        id="confirmPassword"
                         type="password"
                         placeholder={PLACEHOLDERS.CONFIRM_PASSWORD}
+                        error={!!errors.confirmPassword}
                         {...register("confirmPassword", {
                             required: VALIDATION_MESSAGES.CONFIRM_PASSWORD_REQUIRED,
                             validate: (value) =>
                                 value === watch("password") ||
                                 VALIDATION_MESSAGES.PASSWORDS_DO_NOT_MATCH,
                         })}
-                        className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="border rounded-lg !mt-1 !mb-1"
                     />
 
                     {errors.confirmPassword && (
-                        <p className="text-red-500 text-sm mt-1">
+                        <Rb_Text variant="p" className="text-red-500 text-sm">
                             {errors.confirmPassword.message}
-                        </p>
+                        </Rb_Text>
                     )}
                 </div>
-                <button
-                    type="submit"
-                    disabled={registerMutation.isPending}
-                    className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-all"
-                >
-                    {registerMutation.isPending
-                        ? REGISTER_TEXT.SUBMIT_BUTTON_LOADING
-                        : REGISTER_TEXT.SUBMIT_BUTTON}
-                </button>
-            </form>
 
-            <p className="text-center text-sm mt-6">
-                {REGISTER_TEXT.LOGIN_PROMPT}{" "}
-                <span
+                <Button
+                    type="submit"
+                    className="w-full mt-3"
+                    isLoading={registerMutation.isPending}
+                >
+                    {REGISTER_TEXT.SUBMIT_BUTTON}
+                </Button>
+
+            </form>
+            <div className="text-center text-sm mt-3">
+                <Rb_Text variant="span" >
+                    {REGISTER_TEXT.LOGIN_PROMPT}{" "}
+                </Rb_Text>
+                <Rb_Text variant="span"
                     onClick={() => setIsLogin(true)}
-                    className="text-indigo-600 cursor-pointer font-semibold"
+                    className="text-blue-600 cursor-pointer font-semibold"
                 >
                     {REGISTER_TEXT.LOGIN_LINK}
-                </span>
-            </p>
+                </Rb_Text>
+            </div>
         </div>
     );
-}
+};
 
 export default Register;
