@@ -42,3 +42,11 @@ export const LOGIN_CONSTANTS = {
     INVALID_CREDENTIALS: "Invalid email or password.",
   },
 };
+
+export const AUTH_LAYOUT_TEXT = {
+  APP_NAME: "BOOK",
+  APP_NAME_HIGHLIGHT: "RENTAL",
+  TAGLINE: "Read more. Rent easily.",
+  LOGIN_TAB: "Login",
+  REGISTER_TAB: "Register",
+};
