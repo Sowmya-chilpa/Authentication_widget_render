@@ -2,13 +2,17 @@ import { useState } from "react";
 import Login from "./Login";
 import Register from "./Register";
 import background from "../assets/glassybackground.png";
+import { Rb_Text } from "rentbook-ui-lib";
+import { AUTH_LAYOUT_TEXT } from "../constants";
+import { FiBookOpen } from "react-icons/fi";
+
 
 const AuthLayoutGlass = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center flex items-center justify-center p-6"
+      className="h-screen w-full overflow-hidden bg-cover bg-center flex items-center justify-center px-3 py-4 sm:px-6"
       style={{
         backgroundImage: `url(${background})`,
       }}
@@ -16,79 +20,126 @@ const AuthLayoutGlass = () => {
       <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
 
       <style>{`
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .auth-card {
+          max-height: 96vh;
+          overflow-y: auto;
+        }
+
+        .auth-card::-webkit-scrollbar {
+          display: none;
+        }
+
+        .auth-card {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
+        @media (max-height: 700px) {
+          .auth-card {
+            padding: 12px !important;
+          }
+
+          .auth-card h1 {
+            font-size: 1rem !important;
+          }
+
+          .auth-card .auth-sub {
+            margin-bottom: 0 !important;
+            font-size: 0.65rem !important;
+          }
+
+          .auth-card .auth-tabs {
+            margin-bottom: 4px !important;
+          }
+        }
+
+        @media (max-height: 600px) {
+          .auth-card {
+            padding: 10px !important;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .auth-card {
+            padding: 12px !important;
+          }
+
+          .auth-card h1 {
+            font-size: 0.95rem !important;
+          }
+        }
       `}</style>
 
-      <div className="no-scrollbar relative z-10 w-full max-w-md max-h-[95vh] overflow-y-auto rounded-2xl border border-white/30 bg-white/70 backdrop-blur-xl shadow-xl p-5 opacity-80">
+      <div className="auth-card relative z-10 w-full max-w-[420px] sm:max-w-md rounded-2xl border border-white/30 bg-white/70 backdrop-blur-xl shadow-xl p-4 sm:p-5 opacity-80 flex flex-col">
+        <div className="flex flex-col items-center mb-2 shrink-0">
+          <div className="flex items-center gap-1.5">
+            <FiBookOpen />
+            <Rb_Text
+              variant="h1"
+              className="text-lg sm:text-xl font-extrabold text-slate-900"
+            >
+              {AUTH_LAYOUT_TEXT.APP_NAME}{" "}
+              <Rb_Text variant="span" className="text-blue-500">
+                {AUTH_LAYOUT_TEXT.APP_NAME_HIGHLIGHT}
+              </Rb_Text>
+            </Rb_Text>
+          </div>
 
-        <div className="flex flex-col items-center mb-2">
-          <svg
-            viewBox="0 0 24 24"
-            className="w-6 h-6 text-blue-500 mb-0.5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
+          <Rb_Text
+            variant="p"
+            className="auth-sub text-slate-500 text-xs mt-0.5"
           >
-            <path d="M12 6c-1.5-1.3-4-2-7-2v13c3 0 5.5.7 7 2 1.5-1.3 4-2 7-2V4c-3 0-5.5.7-7 2Z" />
-            <path d="M12 6v13" />
-          </svg>
-
-          <h1 className="text-xl font-extrabold text-slate-900">
-            BOOK <span className="text-blue-500">RENTAL</span>
-          </h1>
-
-          <p className="text-slate-500 text-xs mt-0.5">
-            Read more. Rent easily.
-          </p>
+            {AUTH_LAYOUT_TEXT.TAGLINE}
+          </Rb_Text>
         </div>
 
-        <div className="flex justify-center gap-10 border-b border-slate-300/40 mb-2">
+        <div className="auth-tabs flex justify-center gap-8 sm:gap-10 border-b border-slate-300/40 mb-2 shrink-0">
           <button
             onClick={() => setIsLogin(true)}
-            className={`pb-1.5 text-sm font-medium transition border-b-2 ${
-              isLogin
-                ? "text-blue-600 border-blue-600"
-                : "text-slate-500 border-transparent hover:text-slate-700"
-            }`}
+            className={`pb-1.5 text-sm font-medium transition border-b-2 ${isLogin
+              ? "text-blue-600 border-blue-600"
+              : "text-slate-500 border-transparent hover:text-slate-700"
+              }`}
           >
-            Login
+            {AUTH_LAYOUT_TEXT.LOGIN_TAB}
           </button>
 
           <button
             onClick={() => setIsLogin(false)}
-            className={`pb-1.5 text-sm font-medium transition border-b-2 ${
-              !isLogin
-                ? "text-blue-600 border-blue-600"
-                : "text-slate-500 border-transparent hover:text-slate-700"
-            }`}
+            className={`pb-1.5 text-sm font-medium transition border-b-2 ${!isLogin
+              ? "text-blue-600 border-blue-600"
+              : "text-slate-500 border-transparent hover:text-slate-700"
+              }`}
           >
-            Register
+            {AUTH_LAYOUT_TEXT.REGISTER_TAB}
           </button>
         </div>
 
-        <div className="grid">
+        <div className="grid min-h-0">
           <div
-            className={`col-start-1 row-start-1 ${
-              isLogin
-                ? "opacity-100 visible"
-                : "opacity-0 invisible pointer-events-none"
-            }`}
+            className={`col-start-1 row-start-1 ${isLogin
+              ? "opacity-100 visible"
+              : "opacity-0 invisible pointer-events-none"
+              }`}
           >
-            <Login setIsLogin={setIsLogin} />
+            <Login
+              isLogin={isLogin}
+              setIsLogin={setIsLogin}
+            />
           </div>
 
           <div
-            className={`col-start-1 row-start-1 ${
-              !isLogin
-                ? "opacity-100 visible"
-                : "opacity-0 invisible pointer-events-none"
-            }`}
+            className={`col-start-1 row-start-1 ${!isLogin
+              ? "opacity-100 visible"
+              : "opacity-0 invisible pointer-events-none"
+              }`}
           >
-            <Register isLogin={isLogin} setIsLogin={setIsLogin} />
+            <Register
+              isLogin={isLogin}
+              setIsLogin={setIsLogin}
+            />
           </div>
         </div>
-
       </div>
     </div>
   );
