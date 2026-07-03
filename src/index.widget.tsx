@@ -1,11 +1,7 @@
 import { createRoot, Root as ReactRoot } from "react-dom/client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "react-hot-toast";
 import "rentbook-ui-lib/microfrontend.min.css";
 import "./index.css";
-
-import AuthLayoutGlass from "./components/AuthLayoutGlass";
-
+import App from "./App";
 export interface WidgetOptions {
   containerElementId: string;
   name?: string;
@@ -20,10 +16,10 @@ declare global {
 
 const widgetRoots: Record<string, ReactRoot> = {};
 
-const queryClient = new QueryClient();
 
 function Root({ options }: { options: WidgetOptions }) {
-  return <AuthLayoutGlass options={options} />;
+  return <App options={options} />;
+
 }
 
 const getOptionsFromDataAttributes = (
@@ -64,10 +60,11 @@ window.renderReactWidget = (config: string) => {
   const root = createRoot(container);
 
   root.render(
-    <QueryClientProvider client={queryClient}>
-      <Toaster position="top-right" />
-      <Root options={finalOptions} />
-    </QueryClientProvider>
+
+
+    <Root options={finalOptions} />
+
+
   );
 
   widgetRoots[containerId] = root;
