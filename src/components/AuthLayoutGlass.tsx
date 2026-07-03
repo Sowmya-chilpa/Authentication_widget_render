@@ -5,7 +5,7 @@ import background from "../assets/glassybackground.png";
 import { Rb_Text } from "rentbook-ui-lib";
 import { AUTH_LAYOUT_TEXT } from "../constants";
 import { FiBookOpen } from "react-icons/fi";
-
+import "./AuthLayoutGlass.css";
 interface AuthLayoutGlassProps {
   options: {
     containerElementId: string;
@@ -24,58 +24,6 @@ const AuthLayoutGlass = ({ options }: AuthLayoutGlassProps) => {
       }}
     >
       <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
-
-      <style>{`
-        .auth-card {
-          max-height: 96vh;
-          overflow-y: auto;
-        }
-
-        .auth-card::-webkit-scrollbar {
-          display: none;
-        }
-
-        .auth-card {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-
-        @media (max-height: 700px) {
-          .auth-card {
-            padding: 12px !important;
-          }
-
-          .auth-card h1 {
-            font-size: 1rem !important;
-          }
-
-          .auth-card .auth-sub {
-            margin-bottom: 0 !important;
-            font-size: 0.65rem !important;
-          }
-
-          .auth-card .auth-tabs {
-            margin-bottom: 4px !important;
-          }
-        }
-
-        @media (max-height: 600px) {
-          .auth-card {
-            padding: 10px !important;
-          }
-        }
-
-        @media (max-width: 360px) {
-          .auth-card {
-            padding: 12px !important;
-          }
-
-          .auth-card h1 {
-            font-size: 0.95rem !important;
-          }
-        }
-      `}</style>
-
       <div className="auth-card relative z-10 w-full max-w-[420px] sm:max-w-md rounded-2xl border border-white/30 bg-white/70 backdrop-blur-xl shadow-xl p-4 sm:p-5 opacity-80 flex flex-col">
         <div className="flex flex-col items-center mb-2 shrink-0">
           <div className="flex items-center gap-1.5">
